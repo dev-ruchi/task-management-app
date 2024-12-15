@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"; // Corre
 import "./index.css";
 import App from "./App.tsx";
 import Tasks from "./components/Tasks.tsx";
-
+import CreateTask from "./components/CreateTask.tsx";
 
 // Define the router configuration
 const router = createBrowserRouter([
@@ -16,6 +16,10 @@ const router = createBrowserRouter([
         path: "/",
         element: <Tasks />,
       },
+      {
+        path: "/create",
+        element: <CreateTask />
+      }
 
     ],
   },
