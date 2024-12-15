@@ -5,6 +5,7 @@ import "./index.css";
 import App from "./App.tsx";
 import Tasks from "./components/Tasks.tsx";
 import CreateTask from "./components/CreateTask.tsx";
+import UpdateTask from "./components/UpdateTask.tsx";
 
 // Define the router configuration
 const router = createBrowserRouter([
@@ -19,8 +20,11 @@ const router = createBrowserRouter([
       {
         path: "/create",
         element: <CreateTask />
-      }
-
+      },
+      {
+        path: "/update/:id",
+        element: <UpdateTask />
+      },
     ],
   },
 ]);

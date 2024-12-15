@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Input, Button, Form, message } from "antd";
+import { Input, Button, Form, message, Checkbox } from "antd";
 
 const CreateTask = () => {
   const [form] = Form.useForm();
@@ -18,7 +18,6 @@ const CreateTask = () => {
         message.success("Task created successfully!");
         form.resetFields(); // Reset form after successful submission
         console.log(data);
-        
       })
       .catch((error) => {
         console.error(error);
@@ -65,12 +64,10 @@ const CreateTask = () => {
         </Form.Item>
 
         <Form.Item
-          label="Status"
           name="status"
           valuePropName="checked"
-          style={{ display: "flex", alignItems: "center", gap: "10px" }}
         >
-          <Input type="checkbox" style={{ marginLeft: 0 }} />
+          <Checkbox>Checkbox</Checkbox>
         </Form.Item>
 
         <Form.Item>

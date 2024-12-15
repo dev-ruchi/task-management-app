@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { Table } from "antd";
+import { Link } from "react-router-dom";
 
-// Define a type for the todo items
+// Define a type for the task
 interface Task {
+  _id: string;
   taskTitle: string;
   priority: "High" | "Medium" | "Low";
-  dueDate: string; // Use string for date input compatibility
+  dueDate: string; 
   status?: boolean;
 }
 
@@ -26,13 +28,22 @@ const TaskForm: React.FC = () => {
       })
       .then((data) => {
         setTasks(data);
-        console.log(data);
       })
       .catch((err) => {
         setTasks([]);
         console.log(err);
       });
   };
+
+  function handleDelete(taskToDelete: Task) {
+    if (!confirm("Do you want to delete this task")) return;
+
+    // Make the call to delete the task
+
+    setTasks((prevTasks) =>
+      prevTasks.filter((task) => task._id !== taskToDelete._id)
+    );
+  }
 
   const columns = [
     {
@@ -69,10 +80,11 @@ const TaskForm: React.FC = () => {
       key: "actions",
       render: (_: any, record: Task) => (
         <div style={{ display: "flex", gap: "10px" }}>
-          <button onClick={() => handleEdit(record)} style={{ color: "blue", cursor: "pointer" }}>
-            Edit
-          </button>
-          <button onClick={() => handleDelete(record)} style={{ color: "red", cursor: "pointer" }}>
+          <Link to={`/update/${record._id}`}>Edit</Link>
+          <button
+            onClick={() => handleDelete(record)}
+            style={{ color: "red", cursor: "pointer" }}
+          >
             Delete
           </button>
         </div>
@@ -84,6 +96,7 @@ const TaskForm: React.FC = () => {
     <div>
       <h1>Tasks</h1>
       <Table
+        rowKey={(task: Task) => task._id}
         columns={columns}
         dataSource={tasks}
         pagination={{ pageSize: 10 }}
@@ -94,4 +107,3 @@ const TaskForm: React.FC = () => {
 };
 
 export default TaskForm;
-
