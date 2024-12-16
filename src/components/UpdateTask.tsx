@@ -1,8 +1,9 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Form, Input, Button, message, Checkbox } from "antd";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { useParams, useNavigate } from "react-router-dom";
+import backend from "../network/backend";
+
 
 const formatDate = (dateString: string): string => {
   const date = new Date(dateString);
@@ -27,17 +28,15 @@ const UpdateTask = () => {
   });
 
   const fetchTasks = () => {
-    fetch(`http://localhost:3000/tasks/${id}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw Error("could not fetch the data for that resource");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-        setTask(data);
-      })
+    backend.get(`/tasks/${id}`)
+    .then((response) => {
+      if (response.status >= 200 && response.status < 300) {
+        return response.data;
+      }
+    })
+    .then((data) => {
+      setTask(data);
+    })
       .catch((err) => {
         setTask({
           _id: "",
@@ -72,8 +71,8 @@ const UpdateTask = () => {
       return;
     }
 
-    axios
-      .put(`http://localhost:3000/tasks/${task._id}`, {
+  backend
+      .put(`/tasks/${task._id}`, {
         taskTitle: task.taskTitle,
         priority: task.priority,
         dueDate: task.dueDate,

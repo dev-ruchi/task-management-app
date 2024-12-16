@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { Table } from "antd";
+import { Button, Table } from "antd";
 import { Link } from "react-router-dom";
+import backend from "../network/backend";
 
 // Define a type for the task
 interface Task {
   _id: string;
   taskTitle: string;
   priority: "High" | "Medium" | "Low";
-  dueDate: string; 
+  dueDate: string;
   status?: boolean;
 }
 
@@ -19,12 +20,12 @@ const TaskForm: React.FC = () => {
   }, []);
 
   const fetchTasks = () => {
-    fetch("http://localhost:3000/tasks")
+    backend
+      .get("/tasks")
       .then((response) => {
-        if (!response.ok) {
-          throw Error("could not fetch the data for that resource");
+        if (response.status >= 200 && response.status < 300) {
+          return response.data;
         }
-        return response.json();
       })
       .then((data) => {
         setTasks(data);
@@ -94,7 +95,12 @@ const TaskForm: React.FC = () => {
 
   return (
     <div>
-      <h1>Tasks</h1>
+      <Link to="/create">
+        <Button type="primary">Create</Button>
+      </Link>
+      <h1 className="text-4xl font-bold text-gray-800 text-center mt-6 mb-4">
+        Tasks
+      </h1>
       <Table
         rowKey={(task: Task) => task._id}
         columns={columns}

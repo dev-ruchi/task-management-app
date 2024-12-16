@@ -1,5 +1,5 @@
-import axios from "axios";
 import { Input, Button, Form, message, Checkbox } from "antd";
+import backend from "../network/backend"
 
 const CreateTask = () => {
   const [form] = Form.useForm();
@@ -12,8 +12,8 @@ const CreateTask = () => {
       status: values.status || false, // Default to false if not provided
     };
 
-    axios
-      .post("http://localhost:3000/tasks", payload)
+ 
+      backend.post("/tasks", payload)
       .then((data) => {
         message.success("Task created successfully!");
         form.resetFields(); // Reset form after successful submission
