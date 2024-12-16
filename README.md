@@ -14,23 +14,17 @@ This is a React-based Task Management Application that allows users to view and 
 
 ---
 
-## Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/task-management-app.git
-
-
-
-## Navigate to the project directory:
+1. Navigate to the project directory:
 ```bash
 cd task-management-app
 ```
-## Install dependencies:
+2. Copy .env file from .env.example and update the variables.
+
+3.Install dependencies:
 ```bash
 npm install
 ```
-## Start the development server:
+4. Start the development server:
 ```bash
 npm start
 ```
